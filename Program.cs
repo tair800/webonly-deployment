@@ -95,11 +95,21 @@ app.MapGet("/health", () =>
     return Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
 });
 
-// Root endpoint
-app.MapGet("/", () => Results.Ok(new { Message = "WebOnlyAPI is running", Timestamp = DateTime.UtcNow }));
+// Root endpoint - explicit response
+app.MapGet("/", () => 
+{
+    return Results.Ok(new { 
+        Message = "WebOnlyAPI is running", 
+        Timestamp = DateTime.UtcNow,
+        Status = "Healthy"
+    });
+});
 
 // Test endpoint
 app.MapGet("/test", () => Results.Ok(new { Status = "OK", Message = "Service is working" }));
+
+// Simple health check for Railway
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
 
 app.MapControllers();
 
@@ -126,6 +136,6 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 var host = "0.0.0.0"; // Listen on all interfaces for Railway
 
 // Minimal logging to prevent rate limits
-// Console.WriteLine($"Starting on {host}:{port}");
+Console.WriteLine($"Starting on {host}:{port}");
 
 await app.RunAsync($"http://{host}:{port}");
