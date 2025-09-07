@@ -98,6 +98,9 @@ app.MapGet("/health", () =>
 // Root endpoint
 app.MapGet("/", () => Results.Ok(new { Message = "WebOnlyAPI is running", Timestamp = DateTime.UtcNow }));
 
+// Test endpoint
+app.MapGet("/test", () => Results.Ok(new { Status = "OK", Message = "Service is working" }));
+
 app.MapControllers();
 
 // Seed data (non-blocking)
