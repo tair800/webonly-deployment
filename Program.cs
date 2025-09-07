@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebOnlyAPI.Data;
 using WebOnlyAPI.Services;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,7 @@ builder.Services.AddCors(options =>
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register services
 builder.Services.AddScoped<IUserService, UserService>();
