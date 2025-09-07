@@ -55,14 +55,13 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     try
     {
-        Console.WriteLine("Attempting to connect to database...");
+        // Reduced logging to prevent rate limits
         context.Database.EnsureCreated();
-        Console.WriteLine("Database created/verified successfully.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error creating database: {ex.Message}");
-        Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        // Reduced logging to prevent rate limits
+        Console.WriteLine($"Database error: {ex.Message}");
         // Don't fail the startup if database connection fails
     }
 }
@@ -109,11 +108,13 @@ _ = Task.Run(async () =>
         using var scope = app.Services.CreateScope();
         var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeederService>();
         await dataSeeder.SeedAllDataAsync();
-        Console.WriteLine("Data seeding completed successfully.");
+        // Reduced logging to prevent rate limits
+        // Console.WriteLine("Data seeding completed successfully.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error seeding data: {ex.Message}");
+        // Reduced logging to prevent rate limits
+        // Console.WriteLine($"Error seeding data: {ex.Message}");
     }
 });
 
@@ -121,7 +122,7 @@ _ = Task.Run(async () =>
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 var host = "0.0.0.0"; // Listen on all interfaces for Railway
 
-Console.WriteLine($"Starting application on {host}:{port}");
-Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
+// Reduced logging to prevent rate limits
+Console.WriteLine($"Starting on {host}:{port}");
 
 await app.RunAsync($"http://{host}:{port}");
