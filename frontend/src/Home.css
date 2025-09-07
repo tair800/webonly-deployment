@@ -1,0 +1,924 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.home-container {
+    padding: 0;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    margin: 0;
+    background-color: #111214;
+    overflow: hidden;
+    position: relative;
+}
+
+.home-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.home-container p {
+    font-size: 1.2rem;
+    color: #cccccc;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Circle Background Elements */
+.circle-background-left {
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: conic-gradient(from 213.15deg at 50% 50%, #17DBFC -16.68deg, #467EFE 90.44deg, #17DBFC 343.32deg, #467EFE 450.44deg);
+    backdrop-filter: blur(285.79998779296875px);
+    filter: blur(100px);
+    opacity: 0.2;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.circle-background-right {
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    transform: translate(50%, -50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: conic-gradient(from 213.15deg at 50% 50%, #17DBFC -16.68deg, #467EFE 90.44deg, #17DBFC 343.32deg, #467EFE 450.44deg);
+    backdrop-filter: blur(285.79998779296875px);
+    filter: blur(100px);
+    opacity: 0.2;
+    z-index: 9;
+    pointer-events: none;
+}
+
+/* Slider Styles */
+.slider-container {
+    width: 100vw;
+    height: 50vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111214;
+}
+
+/* Top Ellipse */
+.top-ellipse {
+    position: absolute;
+    top: -93px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1920px;
+    height: 147px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.ellipse-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Image Scroller Wrapper */
+.image-scroller-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.image-scroller-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.image-scroller {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+/* Individual image containers */
+.image-slide {
+    width: 33.333333vw;
+    height: 60vh;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+/* Bottom Ellipse */
+.bottom-ellipse {
+    position: absolute;
+    bottom: -119px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1920px;
+    height: 147px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* Slide Animation Keyframes */
+@keyframes slideInNext {
+    0% {
+        transform: translateX(100px) scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInPrev {
+    0% {
+        transform: translateX(-100px) scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Circular Progress Container */
+.circular-progress-container {
+    position: relative;
+    width: 100vw;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    top: 42px;
+}
+
+/* Circular Progress Indicator */
+.circular-progress {
+    position: relative;
+    width: 400px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    transform: translateY(0);
+    top: 150px;
+    clip-path: inset(0 0 50% 0);
+}
+
+.circle-logo {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-logo-icon {
+    width: 350px;
+    height: 90px;
+    object-fit: contain;
+
+    /* Crop bottom 25% to hide "technology" text */
+}
+
+.circle-logo-text {
+    position: fixed;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 1400px;
+    pointer-events: none;
+}
+
+.logo-text-background {
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    image-rendering: auto;
+    transform: scale(1);
+}
+
+.circular-progress svg {
+    background: transparent;
+    border: none;
+    outline: none;
+    overflow: visible;
+    width: 400px;
+    height: 320px;
+}
+
+.progress-circle {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-name {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    fill: #ffffff;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s;
+    cursor: pointer;
+    user-select: none;
+    will-change: transform;
+}
+
+.slider-name:hover {
+    fill: #17DBFC;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.slider-name.active {
+    fill: #17DBFC;
+    font-weight: 600;
+    font-size: 22px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-name.active:hover {
+    font-size: 24px;
+    transition: font-size 0.2s;
+}
+
+/* Slider Buttons Container */
+.slider-buttons-container {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Navigation Buttons */
+.slider-nav-btn {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(144.98deg, #467EFE 19.57%, #17DBFC 63.17%, #FFFFFF 109.8%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    box-shadow: 0 4px 15px rgba(70, 126, 254, 0.3);
+    aspect-ratio: 1;
+    min-width: 70px;
+    min-height: 70px;
+    max-width: 70px;
+    max-height: 70px;
+    overflow: hidden;
+}
+
+.slider-nav-btn:hover:not(:disabled) {
+    width: 75px;
+    height: 75px;
+    min-width: 75px;
+    min-height: 75px;
+    max-width: 75px;
+    max-height: 75px;
+    box-shadow: 0 6px 20px rgba(70, 126, 254, 0.4);
+}
+
+.slider-nav-btn:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.slider-nav-btn:active:not(:disabled) {
+    outline: none;
+    border: none;
+}
+
+.slider-nav-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: scale(0.95);
+}
+
+.slider-prev-btn {
+    left: 50px;
+    top: calc(50% - 35px);
+}
+
+.slider-next-btn {
+    right: 50px;
+    top: calc(50% - 35px);
+}
+
+.slider-nav-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+}
+
+.slider-nav-btn:hover:not(:disabled) .slider-nav-icon {
+    transform: scale(1.1);
+}
+
+.slide-number {
+    font-size: 4rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .home-container {
+        padding-top: 15vh;
+    }
+
+    .slider-container {
+        height: 50vh;
+    }
+
+    .image-scroller-wrapper {
+        height: 50vh;
+    }
+
+    .image-slide {
+        height: 50vh;
+    }
+
+    .top-ellipse,
+    .bottom-ellipse {
+        width: 1400px;
+        height: 110px;
+    }
+
+    .circular-progress {
+        width: 300px;
+        height: 240px;
+        top: 112px;
+    }
+
+    .circular-progress svg {
+        width: 300px;
+        height: 240px;
+    }
+
+    .circle-logo-icon {
+        width: 240px;
+        height: 170px;
+    }
+
+    .logo-text-background {
+        width: 380px;
+    }
+
+    .slider-nav-btn {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        max-width: 60px;
+        max-height: 60px;
+    }
+
+    .slider-nav-btn:hover:not(:disabled) {
+        width: 65px;
+        height: 65px;
+        min-width: 65px;
+        min-height: 65px;
+        max-width: 65px;
+        max-height: 65px;
+    }
+
+    .slider-prev-btn {
+        left: 40px;
+        top: calc(50% - 30px);
+    }
+
+    .slider-next-btn {
+        right: 40px;
+        top: calc(50% - 30px);
+    }
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        padding-top: 12vh;
+    }
+
+    .slider-container {
+        height: 45vh;
+    }
+
+    .image-scroller-wrapper {
+        height: 45vh;
+    }
+
+    .image-slide {
+        height: 45vh;
+    }
+
+    .top-ellipse,
+    .bottom-ellipse {
+        width: 1000px;
+        height: 80px;
+    }
+
+    .slider-nav-btn {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .slider-nav-btn:hover:not(:disabled) {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        min-height: 55px;
+        max-width: 55px;
+        max-height: 55px;
+    }
+
+    .slider-prev-btn {
+        left: 20px;
+        top: calc(50% - 25px);
+    }
+
+    .slider-next-btn {
+        right: 20px;
+        top: calc(50% - 25px);
+    }
+
+    .slider-nav-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .slide-number {
+        font-size: 2rem;
+    }
+
+    .circular-progress-container {
+        height: 100px;
+        margin-top: -50px;
+    }
+
+    .circular-progress {
+        width: 120px;
+        height: 100px;
+        top: 47px;
+    }
+
+    .circular-progress svg {
+        width: 120px;
+        height: 100px;
+    }
+
+    .circle-logo-icon {
+        width: 80px;
+        height: 60px;
+    }
+
+    .logo-text-background {
+        width: 120px;
+    }
+
+    .slider-name {
+        font-size: 8px;
+    }
+
+    .slider-name:hover,
+    .slider-name.active {
+        font-size: 9px;
+    }
+
+    .circle-background-left,
+    .circle-background-right {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* Responsive Design for Circle and Logo */
+@media (max-width: 900px) {
+    .circular-progress-container {
+        height: 150px;
+        margin-top: -75px;
+    }
+
+    .circular-progress {
+        width: 280px;
+        height: 220px;
+        transform: translateY(0);
+    }
+
+    .circle-logo {
+        top: 18%;
+    }
+
+    .circle-logo-icon {
+        width: 180px;
+        height: 120px;
+    }
+
+    .circle-logo-text {
+        top: 8%;
+    }
+
+    .logo-text-background {
+        width: 300px;
+        opacity: 0.08;
+    }
+
+    .slider-name {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 600px) {
+    .home-container {
+        padding-top: 10vh;
+    }
+
+    .slider-container {
+        height: 40vh;
+    }
+
+    .image-scroller-wrapper {
+        height: 40vh;
+    }
+
+    .image-slide {
+        height: 40vh;
+    }
+
+    .top-ellipse,
+    .bottom-ellipse {
+        width: 800px;
+        height: 60px;
+    }
+
+    .slider-nav-btn {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
+    }
+
+    .slider-nav-btn:hover:not(:disabled) {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .slider-prev-btn {
+        left: 15px;
+        top: calc(50% - 22.5px);
+    }
+
+    .slider-next-btn {
+        right: 15px;
+        top: calc(50% - 22.5px);
+    }
+
+    .slider-nav-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .circular-progress-container {
+        height: 60px;
+        margin-top: -30px;
+    }
+
+    .circular-progress {
+        width: 80px;
+        height: 60px;
+        top: 28px;
+    }
+
+    .circular-progress svg {
+        width: 80px;
+        height: 60px;
+    }
+
+    .circle-logo {
+        top: 8%;
+    }
+
+    .circle-logo-icon {
+        width: 60px;
+        height: 40px;
+    }
+
+    .circle-logo-text {
+        top: 2%;
+    }
+
+    .logo-text-background {
+        width: 80px;
+        opacity: 0.15;
+    }
+
+    .slider-name {
+        font-size: 6px;
+    }
+
+    .slider-name:hover,
+    .slider-name.active {
+        font-size: 7px;
+    }
+
+    .circle-background-left,
+    .circle-background-right {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        padding-top: 8vh;
+    }
+
+    .slider-container {
+        height: 35vh;
+    }
+
+    .image-scroller-wrapper {
+        height: 35vh;
+    }
+
+    .image-slide {
+        height: 35vh;
+    }
+
+    .top-ellipse,
+    .bottom-ellipse {
+        width: 600px;
+        height: 45px;
+    }
+
+    .slider-nav-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+    }
+
+    .slider-nav-btn:hover:not(:disabled) {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
+    }
+
+    .slider-prev-btn {
+        left: 10px;
+        top: calc(50% - 20px);
+    }
+
+    .slider-next-btn {
+        right: 10px;
+        top: calc(50% - 20px);
+    }
+
+    .slider-nav-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .circular-progress-container {
+        height: 40px;
+        margin-top: -20px;
+    }
+
+    .circular-progress {
+        width: 60px;
+        height: 40px;
+        top: 19px;
+    }
+
+    .circular-progress svg {
+        width: 60px;
+        height: 40px;
+    }
+
+    .circle-logo-icon {
+        width: 40px;
+        height: 30px;
+    }
+
+    .logo-text-background {
+        width: 60px;
+    }
+
+    .slider-name {
+        font-size: 5px;
+    }
+
+    .slider-name:hover,
+    .slider-name.active {
+        font-size: 6px;
+    }
+
+    .circle-background-left,
+    .circle-background-right {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 360px) {
+    .home-container {
+        padding-top: 6vh;
+    }
+
+    .slider-container {
+        height: 30vh;
+    }
+
+    .image-scroller-wrapper {
+        height: 30vh;
+    }
+
+    .image-slide {
+        height: 30vh;
+    }
+
+    .top-ellipse,
+    .bottom-ellipse {
+        width: 400px;
+        height: 30px;
+    }
+
+    .slider-nav-btn {
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+        min-height: 35px;
+        max-width: 35px;
+        max-height: 35px;
+    }
+
+    .slider-nav-btn:hover:not(:disabled) {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+    }
+
+    .slider-prev-btn {
+        left: 8px;
+        top: calc(50% - 17.5px);
+    }
+
+    .slider-next-btn {
+        right: 8px;
+        top: calc(50% - 17.5px);
+    }
+
+    .slider-nav-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .circular-progress-container {
+        height: 30px;
+        margin-top: -15px;
+    }
+
+    .circular-progress {
+        width: 40px;
+        height: 30px;
+        top: 14px;
+    }
+
+    .circular-progress svg {
+        width: 40px;
+        height: 30px;
+    }
+
+    .circle-logo-icon {
+        width: 30px;
+        height: 20px;
+    }
+
+    .logo-text-background {
+        width: 40px;
+    }
+
+    .slider-name {
+        font-size: 4px;
+    }
+
+    .slider-name:hover,
+    .slider-name.active {
+        font-size: 5px;
+    }
+
+    .circle-background-left,
+    .circle-background-right {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Home Logo Text */
+.home-logo-text {
+    position: absolute;
+    top: 83%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    max-width: 1400px;
+    pointer-events: none;
+}
+
+.home-logo-text-background {
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    image-rendering: auto;
+    transform: scale(1);
+}
