@@ -49,6 +49,9 @@ builder.Services.AddScoped<IVisitorAnalyticsService, VisitorAnalyticsService>();
 
 var app = builder.Build();
 
+// Define health check early to avoid middleware issues
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }));
+
 // Ensure database is created
 using (var scope = app.Services.CreateScope())
 {
@@ -108,28 +111,27 @@ app.MapGet("/", () =>
 // Test endpoint
 app.MapGet("/test", () => Results.Ok(new { Status = "OK", Message = "Service is working" }));
 
-// Simple health check for Railway
-app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
+// Health check already defined above
 
 app.MapControllers();
 
-// Seed data (non-blocking)
-_ = Task.Run(async () =>
-{
-    try
-    {
-        using var scope = app.Services.CreateScope();
-        var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeederService>();
-        await dataSeeder.SeedAllDataAsync();
-        // Reduced logging to prevent rate limits
-        // Console.WriteLine("Data seeding completed successfully.");
-    }
-    catch (Exception ex)
-    {
-        // Reduced logging to prevent rate limits
-        // Console.WriteLine($"Error seeding data: {ex.Message}");
-    }
-});
+// Seed data (disabled temporarily to fix health check)
+// _ = Task.Run(async () =>
+// {
+//     try
+//     {
+//         using var scope = app.Services.CreateScope();
+//         var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeederService>();
+//         await dataSeeder.SeedAllDataAsync();
+//         // Reduced logging to prevent rate limits
+//         // Console.WriteLine("Data seeding completed successfully.");
+//     }
+//     catch (Exception ex)
+//     {
+//         // Reduced logging to prevent rate limits
+//         // Console.WriteLine($"Error seeding data: {ex.Message}");
+//     }
+// });
 
 // Configure port and host for Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
