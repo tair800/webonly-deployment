@@ -89,7 +89,14 @@ app.MapGet("/api/health", () =>
    .RequireCors("AllowHealthCheck");
 
 // Simple health check without CORS
-app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }));
+app.MapGet("/health", () => 
+{
+    Console.WriteLine("Health check called at " + DateTime.UtcNow);
+    return Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+});
+
+// Root endpoint
+app.MapGet("/", () => Results.Ok(new { Message = "WebOnlyAPI is running", Timestamp = DateTime.UtcNow }));
 
 app.MapControllers();
 
