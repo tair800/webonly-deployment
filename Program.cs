@@ -60,8 +60,8 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        // Reduced logging to prevent rate limits
-        Console.WriteLine($"Database error: {ex.Message}");
+        // Minimal logging to prevent rate limits
+        // Console.WriteLine($"Database error: {ex.Message}");
         // Don't fail the startup if database connection fails
     }
 }
@@ -122,7 +122,7 @@ _ = Task.Run(async () =>
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 var host = "0.0.0.0"; // Listen on all interfaces for Railway
 
-// Reduced logging to prevent rate limits
-Console.WriteLine($"Starting on {host}:{port}");
+// Minimal logging to prevent rate limits
+// Console.WriteLine($"Starting on {host}:{port}");
 
 await app.RunAsync($"http://{host}:{port}");
