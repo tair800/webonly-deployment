@@ -12,7 +12,7 @@ app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
 app.MapGet("/", () => Results.Ok(new { Message = "WebOnlyAPI is running" }));
 
 // Configure port and host for Railway
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 var host = "0.0.0.0";
 
 Console.WriteLine($"Starting on {host}:{port}");
