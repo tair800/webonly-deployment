@@ -1,7 +1,6 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "api/Dockerfile"
-buildContext = "api"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "dotnet WebOnlyAPI.dll"
