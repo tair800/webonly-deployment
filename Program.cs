@@ -23,6 +23,15 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader()
                    .AllowCredentials();
         });
+    
+    // Allow Railway health checks
+    options.AddPolicy("AllowHealthCheck",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
 });
 
 // Add DbContext
@@ -69,6 +78,11 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseStaticFiles();
 
+// Allow health checks from Railway
+app.MapGet("/api/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }))
+   .WithName("HealthCheck")
+   .RequireCors("AllowHealthCheck");
+
 app.MapControllers();
 
 // Seed data
@@ -78,4 +92,8 @@ using (var scope = app.Services.CreateScope())
     await dataSeeder.SeedAllDataAsync();
 }
 
-await app.RunAsync();
+// Configure port and host for Railway
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var host = "0.0.0.0"; // Listen on all interfaces for Railway
+
+await app.RunAsync($"http://{host}:{port}");
