@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebOnlyAPI.Data;
 using WebOnlyAPI.Services;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +35,7 @@ builder.Services.AddCors(options =>
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register services
 builder.Services.AddScoped<IUserService, UserService>();
@@ -56,12 +55,15 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     try
     {
+        Console.WriteLine("Attempting to connect to database...");
         context.Database.EnsureCreated();
         Console.WriteLine("Database created/verified successfully.");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"Error creating database: {ex.Message}");
+        Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        // Don't fail the startup if database connection fails
     }
 }
 
@@ -85,15 +87,28 @@ app.MapGet("/api/health", () => Results.Ok(new { Status = "Healthy", Timestamp =
 
 app.MapControllers();
 
-// Seed data
-using (var scope = app.Services.CreateScope())
+// Seed data (non-blocking)
+_ = Task.Run(async () =>
 {
-    var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeederService>();
-    await dataSeeder.SeedAllDataAsync();
-}
+    try
+    {
+        using var scope = app.Services.CreateScope();
+        var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeederService>();
+        await dataSeeder.SeedAllDataAsync();
+        Console.WriteLine("Data seeding completed successfully.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error seeding data: {ex.Message}");
+    }
+});
 
 // Configure port and host for Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 var host = "0.0.0.0"; // Listen on all interfaces for Railway
+
+Console.WriteLine($"Starting application on {host}:{port}");
+Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
+Console.WriteLine($"Database URL: {Environment.GetEnvironmentVariable("DATABASE_URL")?.Substring(0, Math.Min(50, Environment.GetEnvironmentVariable("DATABASE_URL")?.Length ?? 0))}...");
 
 await app.RunAsync($"http://{host}:{port}");
