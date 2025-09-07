@@ -81,9 +81,15 @@ app.UseCors("AllowAll");
 app.UseStaticFiles();
 
 // Allow health checks from Railway
-app.MapGet("/api/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }))
+app.MapGet("/api/health", () => 
+{
+    return Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+})
    .WithName("HealthCheck")
    .RequireCors("AllowHealthCheck");
+
+// Simple health check without CORS
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }));
 
 app.MapControllers();
 
