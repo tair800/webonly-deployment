@@ -76,7 +76,8 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = ""; // This will serve Swagger UI at the root
 });
 
-app.UseHttpsRedirection();
+// Disable HTTPS redirection for Railway
+// app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseStaticFiles();
 
@@ -91,7 +92,7 @@ app.MapGet("/api/health", () =>
 // Simple health check without CORS
 app.MapGet("/health", () => 
 {
-    Console.WriteLine("Health check called at " + DateTime.UtcNow);
+    // Reduced logging to prevent rate limits
     return Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
 });
 
@@ -122,6 +123,5 @@ var host = "0.0.0.0"; // Listen on all interfaces for Railway
 
 Console.WriteLine($"Starting application on {host}:{port}");
 Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
-Console.WriteLine($"Database URL: {Environment.GetEnvironmentVariable("DATABASE_URL")?.Substring(0, Math.Min(50, Environment.GetEnvironmentVariable("DATABASE_URL")?.Length ?? 0))}...");
 
 await app.RunAsync($"http://{host}:{port}");
